@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/bootstrap/bootstrap.4.6.min.css">
+    <link rel="stylesheet" href="../static/css/init.css">
+        <!-- 引入本地 Font Awesome -->
+    <link rel="stylesheet" href="../static/fontawesome-free-7.1.0-web/css/all.min.css">
+    <title>web问答平台 - 登录</title>
+    <!-- 新增自定义样式 -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+        .login-header {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .login-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .login-header p {
+            color: #777;
+            font-size: 14px;
+        }
+        .login-form {
+            padding: 10px 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .input-icon {
+            position: relative;
+        }
+        .input-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        .form-control {
+            padding-left: 40px;
+            height: 46px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .form-check {
+            display: flex;
+            align-items: center;
+
+        }
+        .form-check-input {
+            margin-right: 8px;
+        }
+        .btn-login {
+            background: #339dff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            padding: 12px 0;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        .logo-footer {
+            margin-top: 10px;
+        }
+        /* 插图区域 */
+        .illustration {
+            background: #f0f7ff;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        .illustration img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* 链接样式 */
+        .links {
+            text-align: center;
+
+        }
+        .links a {
+            color: #3399ff;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        /* 第三方登录按钮 */
+        .social-login {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 2px 0;
+        }
+        .social-btn {
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .social-btn:hover {
+            background: #f0f0f0;
+        }
+        .wechat-icon {
+            color: #07c74b;
+        }
+        .qq-icon {
+            color: #1a96ff;
+        }
+        /* 返回首页按钮 - 放在左上角 */
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            z-index: 10;
+        }
+        .back-home a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-home a:hover {
+            text-decoration: underline;
+        }
+        /* 修改链接区域布局 - 与记住用户名同行 */
+        .links {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+        .links a {
+            color: #3399ff;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .remember-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .remember-container .form-check {
+
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 登录卡片主体 -->
+    <div class="login-card">
+        <div class="row no-gutters">
+            <!-- 左侧插图（可替换为实际图片） -->
+            <div class="col-md-5 illustration">
+                <img src="../static/images/login-illustration.png" alt="登录插图" style="max-width: 300px;">
+            </div>
+            <!-- 右侧表单 -->
+            <div class="col-md-7">
+                <div class="login-header">
+                    <h1>智能硬件平台</h1>
+                    <p>一款让设计更美好的智能AI平台</p>
+                </div>
+                <div class="login-form">
+                    <form action="#" method="POST">
+                        <!-- 返回首页按钮 - 放在左上角 -->
+                        <div class="back-home">
+                            <a href="/">← 返回首页</a>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" class="form-control" placeholder="请输入手机号或邮箱" name="email" required>
+                        </div>
+                        <div class="form-group input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" placeholder="请输入登录密码" name="password" required>
+                        </div>
+
+                        <!-- 记住用户名 + 忘记密码 + 立即注册 同一行 -->
+                        <div class="remember-container">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                                <label class="form-check-label" for="remember">记住用户名</label>
+                            </div>
+                            <div class="links">
+                                <a href="{{ url_for('auth.forget_password') }}">忘记密码？</a>
+                                <div>|&nbsp</div>
+                                <a href="{{ url_for('auth.register') }}">立即注册</a>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-login">登录</button>
+
+                        <!-- 第三方登录 -->
+                        <div class="social-login">
+                            <div class="social-btn wechat-icon">
+                                <i class="fab fa-weixin"></i> 微信登录
+                            </div>
+                            <div class="social-btn qq-icon">
+                                <i class="fab fa-qq"></i> QQ登录
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="footer">
+                    © 2020 SSKOO ALL RIGHTS RESERVED | SSKOO.COM | 蜀ICP备19000696号
+                    <div class="logo-footer">
+                        <img src="../static/images/shetu66-logo.png" alt="shetu66.com" width="120">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

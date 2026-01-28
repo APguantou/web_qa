@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../static/bootstrap/bootstrap.4.6.min.css">
+    <link rel="stylesheet" href="../static/css/init.css">
+    <!-- 引入本地 Font Awesome -->
+    <link rel="stylesheet" href="../static/fontawesome-free-7.1.0-web/css/all.min.css">
+    <title>web问答平台 - 注册</title>
+    <script src="{{ url_for('static', filename='jquery/jquery.3.6.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/register.js') }}"></script>
+    <!-- 新增自定义样式 -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .register-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 800px;
+            overflow: hidden;
+        }
+        .register-header {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        .register-header h1 {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        .register-header p {
+            color: #777;
+            font-size: 14px;
+        }
+        .register-form {
+            padding: 10px 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .input-icon {
+            position: relative;
+        }
+        .input-icon i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        .form-control {
+            padding-left: 40px;
+            height: 46px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .btn-register {
+            background: #339dff;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-weight: 500;
+            padding: 12px 0;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        .logo-footer {
+            margin-top: 10px;
+        }
+        /* 插图区域 */
+        .illustration {
+            background: #f0f7ff;
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        .illustration img {
+            max-width: 100%;
+            height: auto;
+        }
+        /* 链接样式 */
+        .links {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+        .links a {
+            color: #3399ff;
+            text-decoration: none;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .links div {
+            margin: 0 10px; /* 分隔符间距 */
+        }
+        /* 返回首页按钮 - 放在左上角 */
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            z-index: 10;
+        }
+        .back-home a {
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .back-home a:hover {
+            text-decoration: underline;
+        }
+        .captcha-container {
+            display: flex;
+            gap: 10px;
+        }
+        .captcha-container input {
+            flex: 1;
+        }
+        .captcha-container button {
+            height: 46px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 注册卡片主体 -->
+    <div class="register-card">
+        <div class="row no-gutters">
+            <!-- 左侧插图 -->
+            <div class="col-md-5 illustration">
+                <img src="../static/images/login-illustration.png" alt="注册插图" style="max-width: 300px;">
+            </div>
+            <!-- 右侧表单 -->
+            <div class="col-md-7">
+                <div class="register-header">
+                    <h1>智能硬件平台</h1>
+                    <p>一款让设计更美好的智能AI平台</p>
+                </div>
+                <div class="register-form">
+                    <form method="POST" action="#">
+                        <!-- 返回首页按钮 - 放在左上角 -->
+                        <div class="back-home">
+                            <a href="/">← 返回首页</a>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" class="form-control" placeholder="请输入邮箱" name="email" required>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-icon">
+                                <i class="fas fa-key"></i>
+                                <div class="captcha-container">
+                                    <input type="text" class="form-control" placeholder="请输入验证码" name="captcha" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="captcha-btn">获取验证码</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" class="form-control" placeholder="请输入用户名" name="username" required>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" placeholder="请输入密码" name="password" required>
+                        </div>
+
+                        <div class="form-group input-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" class="form-control" placeholder="请确认密码" name="password_confirm" required>
+                        </div>
+
+                        <!-- 登录 + 忘记密码 + 立即注册 链接行 -->
+                        <div class="links">
+                            <a href="{{ url_for('auth.login') }}">已有账号？立即登录</a>
+                        </div>
+
+                        <button type="submit" class="btn btn-register">注册</button>
+                    </form>
+                </div>
+                <div class="footer">
+                    © 2020 SSKOO ALL RIGHTS RESERVED | SSKOO.COM | 蜀ICP备19000696号
+                    <div class="logo-footer">
+                        <img src="../static/images/shetu66-logo.png" alt="shetu66.com" width="120">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

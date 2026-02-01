@@ -57,3 +57,8 @@ def top_list():
 
     return render_template("top_list.html", questions=questions, creators=creators)
 
+
+#添加JS-index路由
+@bp.route("JS_index_cgw")
+def JS_index():
+    return render_template("JS_index.html")

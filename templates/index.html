@@ -283,7 +283,10 @@
                                  src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="">
                         </div>
                         <div class="question-main">
-                            <div class="question-title"><a href="#">{{ question.title }}</a></div>
+                            <!-- 修改这一部分 -->
+                            <div class="question-title">
+                                <a href="{{ url_for('qa.question_detail', question_id=question.id) }}">{{ question.title }}</a>
+                            </div>
                             <div class="question-content">{{ question.content }}</div>
                             <div class="question-detail">
                                 <span class="question-author">{{ question.author.username }}</span>

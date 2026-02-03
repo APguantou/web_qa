@@ -3,7 +3,7 @@ from flask_mail import Message
 from flask import request
 import random
 import string
-from models import EmailCaptchaModel, UserModel, QuestionModel
+from models import EmailCaptchaModel, UserModel, QuestionModel,QuestionLikeModel,QuestionFavoriteModel,QuestionCommentModel
 from .forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from exts import mail, db
@@ -107,11 +107,35 @@ def user_page():
         return redirect(url_for("auth.login"))
 
     user = UserModel.query.get(user_id)
+
+    # 查询用户相关内容
     user_questions = QuestionModel.query.filter_by(author_id=user_id).order_by(
         QuestionModel.create_time.desc()
     ).all()
 
-    return render_template("user_page.html", user=user, user_questions=user_questions)
+    # 查询我的点赞
+    liked_questions = QuestionModel.query.join(QuestionLikeModel).filter(
+        QuestionLikeModel.user_id == user_id
+    ).order_by(QuestionLikeModel.create_time.desc()).all()
+
+    # 查询我的收藏
+    favorited_questions = QuestionModel.query.join(QuestionFavoriteModel).filter(
+        QuestionFavoriteModel.user_id == user_id
+    ).order_by(QuestionFavoriteModel.create_time.desc()).all()
+
+    # 查询我的评论
+    commented_questions = QuestionModel.query.join(QuestionCommentModel).filter(
+        QuestionCommentModel.user_id == user_id
+    ).order_by(QuestionCommentModel.create_time.desc()).all()
+
+    return render_template(
+        "user_page.html",
+        user=user,
+        user_questions=user_questions,
+        liked_questions=liked_questions,
+        favorited_questions=favorited_questions,
+        commented_questions=commented_questions
+    )
 
 
 @bp.route("/delete_account_cgw", methods=['POST'])

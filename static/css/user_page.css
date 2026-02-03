@@ -1,0 +1,353 @@
+/* ===== 全局样式 ===== */
+body {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    min-height: 100vh;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ===== 页面头部 ===== */
+.header {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-title h1 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.header-title p {
+    color: #777;
+    font-size: 14px;
+    margin: 5px 0 0;
+}
+
+.logout-btn {
+    background: #ff6b6b;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 10px 20px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.logout-btn:hover {
+    background: #ff5252;
+}
+
+/* ===== 用户信息卡片 ===== */
+.user-info-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    margin-bottom: 20px;
+}
+
+.user-info-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    font-size: 36px;
+    color: #666;
+}
+
+.user-details h2 {
+    font-size: 22px;
+    margin: 0 0 5px;
+    color: #333;
+}
+
+.user-details p {
+    color: #777;
+    margin: 0;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.info-item {
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.info-item h3 {
+    font-size: 14px;
+    color: #777;
+    margin: 0 0 5px;
+}
+
+.info-item p {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    font-weight: 500;
+}
+
+/* ===== 导航按钮（Dashboard / Articles / Notes / Reviews） ===== */
+.tab-buttons-container {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tab-btn:hover {
+    background: #eef5ff;
+    border-color: #339dff;
+    transform: translateY(-1px);
+}
+
+.tab-btn.active {
+    background: #339dff;
+    color: white;
+    border-color: #2575fc;
+    box-shadow: 0 4px 8px rgba(51, 157, 255, 0.2);
+}
+
+.tab-btn i {
+    font-size: 16px;
+}
+
+/* ===== 内容区域（帖子/点赞/收藏/评论） ===== */
+.posts-section {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+}
+
+.section-title {
+    font-size: 20px;
+    color: #333;
+    margin: 0 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.post-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.post-item,
+.question-ul li {
+    border-bottom: 1px solid #eee;
+    padding: 15px;
+    transition: background-color 0.3s;
+}
+
+.post-item:hover,
+.question-ul li:hover {
+    background-color: #f9f9f9;
+}
+
+.side-question {
+    margin-right: 15px;
+}
+
+.side-question-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.question-main {
+    flex: 1;
+}
+
+.question-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.question-title a {
+    color: #333;
+    text-decoration: none;
+}
+
+.question-title a:hover {
+    color: #339dff;
+}
+
+.question-content {
+    color: #666;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.question-detail {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: #999;
+}
+
+.question-author {
+    margin-right: 15px;
+}
+
+.question-time {
+    margin-right: 15px;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.post-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.post-date {
+    color: #999;
+    font-size: 14px;
+}
+
+.post-content {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.post-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background: #339dff;
+    color: white;
+}
+
+.btn-delete {
+    background: #ff6b6b;
+    color: white;
+}
+
+/* ===== 积分详情 ===== */
+.points-detail-btn {
+    background: #339dff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.points-detail-btn:hover {
+    background: #1a7fcc;
+}
+
+.points-detail {
+    background: #f0f8ff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.points-detail h4 {
+    margin: 0 0 10px;
+    color: #333;
+}
+
+.points-detail ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.points-detail li {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+/* ===== 空状态提示 ===== */
+.empty-posts {
+    text-align: center;
+    padding: 30px;
+    color: #999;
+}
+
+.empty-posts i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ccc;
+}
+
+/* ===== 隐藏内容区域（用于 tab 切换） ===== */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}

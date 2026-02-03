@@ -449,7 +449,28 @@
 
 
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navbar = document.querySelector('.navbar');
+            const originalTop = navbar.offsetTop;
+            let isStuck = false;
 
+            function handleScroll() {
+                if (window.scrollY > originalTop && !isStuck) {
+                    navbar.classList.add('sticky-top');
+                    isStuck = true;
+                } else if (window.scrollY <= originalTop && isStuck) {
+                    navbar.classList.remove('sticky-top');
+                    isStuck = false;
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll);
+
+            // 初始化状态
+            handleScroll();
+        });
+    </script>
 </head>
 <body>
 
@@ -574,19 +595,19 @@
                 </div>
 
                 <!-- 评论列表 -->
-                <!-- 评论列表 -->
-<ul class="comments-list" id="comments-list">
-    {% for comment in comments %}
-    <li class="comment-item">
-        <div class="comment-header">
-            <img class="comment-avatar" src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="评论者头像">
-            <span class="comment-author">{{ comment.user.username }}</span>
-            <span class="comment-time">{{ comment.create_time }}</span>
-        </div>
-        <div class="comment-content">{{ comment.comment_content }}</div>
-    </li>
-    {% endfor %}
-</ul>
+                <ul class="comments-list" id="comments-list">
+                    {% for comment in comments %}
+                        <li class="comment-item">
+                            <div class="comment-header">
+                                <img class="comment-avatar" src="{{ url_for('static', filename='images/avatar.jpg') }}"
+                                     alt="评论者头像">
+                                <span class="comment-author">{{ comment.user.username }}</span>
+                                <span class="comment-time">{{ comment.create_time }}</span>
+                            </div>
+                            <div class="comment-content">{{ comment.comment_content }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
 
             </div>
         </div>

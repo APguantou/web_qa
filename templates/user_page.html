@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="../static/css/init.css">
     <link rel="stylesheet" href="../static/fontawesome-free-7.1.0-web/css/all.min.css">
     <link rel="stylesheet" href="../static/css/user_page.css"></link>
+           <link rel="icon" href="../static/photo/Web%20Q&A%20Logo.ico" type="image/x-icon">
+
     <title>web问答平台-用户主页</title>
 
 </head>
@@ -86,27 +88,26 @@
     <!-- 帖子列表 -->
     <div class="posts-section">
         <div class="section-header">
-            <h2 class="section-title">我的内容</h2>
             <div class="tab-buttons-container">
-                <button class="tab-btn active" data-tab="posts" onclick="showTab('posts')">
-                    <i class="fas fa-rocket" style="color:#00b8d4;"></i> Dashboard
-                </button>
-                <button class="tab-btn" data-tab="likes" onclick="showTab('likes')">
-                    <i class="fas fa-file-alt" style="color:#339dff;"></i> Articles
-                </button>
-                <button class="tab-btn" data-tab="favorites" onclick="showTab('favorites')">
-                    <i class="far fa-sticky-note" style="color:#ffc107;"></i> Notes
-                </button>
-                <button class="tab-btn" data-tab="comments" onclick="showTab('comments')">
-                    <i class="fas fa-star" style="color:#ff9800;"></i> Reviews
-                </button>
+<button class="tab-btn active" data-tab="posts" onclick="showTab('posts')">
+    <i class="fas fa-pencil-alt" style="color:#00b8d4;"></i> 我的帖子
+</button>
+<button class="tab-btn" data-tab="likes" onclick="showTab('likes')">
+    <i class="fas fa-thumbs-up" style="color:#339dff;"></i> 我的点赞
+</button>
+<button class="tab-btn" data-tab="favorites" onclick="showTab('favorites')">
+    <i class="fas fa-bookmark" style="color:#ffc107;"></i> 我的收藏
+</button>
+<button class="tab-btn" data-tab="comments" onclick="showTab('comments')">
+    <i class="fas fa-comment" style="color:#ff9800;"></i> 我的评论
+</button>
+
             </div>
 
         </div>
 
         <!-- 内容区域 -->
         <div id="posts-tab" class="tab-content active">
-            <h3>我的帖子</h3>
             <div class="post-list">
                 {% for question in user_questions %}
                     <li>
@@ -135,7 +136,6 @@
         </div>
 
         <div id="likes-tab" class="tab-content">
-            <h3>我的点赞</h3>
             <div class="post-list">
                 {% for question in liked_questions %}
                     <li>
@@ -164,7 +164,6 @@
         </div>
 
         <div id="favorites-tab" class="tab-content">
-            <h3>我的收藏</h3>
             <div class="post-list">
                 {% for question in favorited_questions %}
                     <li>
@@ -193,7 +192,6 @@
         </div>
 
         <div id="comments-tab" class="tab-content">
-            <h3>我的评论</h3>
             <div class="post-list">
                 {% for question in commented_questions %}
                     <li>
@@ -304,22 +302,23 @@
     }
 
     function showTab(tabName) {
-        // 隐藏所有 tab 内容
-        document.querySelectorAll('.tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
+    // 隐藏所有 tab 内容
+    document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+    });
 
-        // 移除所有按钮的 active 类
-        document.querySelectorAll('.tab-button').forEach(button => {
-            button.classList.remove('active');
-        });
+    // 移除所有按钮的 active 类
+    document.querySelectorAll('.tab-btn').forEach(button => {
+        button.classList.remove('active');
+    });
 
-        // 显示当前 tab 内容
-        document.getElementById(`${tabName}-tab`).classList.add('active');
+    // 显示当前 tab 内容
+    document.getElementById(`${tabName}-tab`).classList.add('active');
 
-        // 给当前按钮添加 active 类
-        event.target.classList.add('active');
-    }
+    // 给当前按钮添加 active 类
+    event.target.classList.add('active');
+}
+
 
 </script>
 </body>

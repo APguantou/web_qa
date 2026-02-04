@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../static/css/init.css">
         <!-- 引入本地 Font Awesome -->
     <link rel="stylesheet" href="../static/fontawesome-free-7.1.0-web/css/all.min.css">
+       <link rel="icon" href="../static/photo/Web%20Q&A%20Logo.ico" type="image/x-icon">
+
     <title>web问答平台 - 登录</title>
     <!-- 新增自定义样式 -->
     <style>
@@ -101,10 +103,13 @@
             display: flex;
             justify-content: center;
         }
-        .illustration img {
-            max-width: 100%;
-            height: auto;
-        }
+.illustration img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* 保持横纵比，完整显示图片 */
+}
+
         /* 链接样式 */
         .links {
             text-align: center;
@@ -194,13 +199,13 @@
         <div class="row no-gutters">
             <!-- 左侧插图（可替换为实际图片） -->
             <div class="col-md-5 illustration">
-                <img src="../static/images/login-illustration.png" alt="登录插图" style="max-width: 300px;">
+                <img src="../static/photo/login_logo.png" alt="登录插图" style="max-width: 300px;">
             </div>
             <!-- 右侧表单 -->
             <div class="col-md-7">
                 <div class="login-header">
-                    <h1>智能硬件平台</h1>
-                    <p>一款让设计更美好的智能AI平台</p>
+                    <h1>Web 问答平台 - 登录</h1>
+                    <p>一个简单、易用的问答平台</p>
                 </div>
                 <div class="login-form">
                     <form action="#" method="POST">
@@ -225,7 +230,7 @@
                                 <label class="form-check-label" for="remember">记住用户名</label>
                             </div>
                             <div class="links">
-                                <a href="{{ url_for('auth.forget_password') }}">忘记密码？</a>
+                                <a href="{{ url_for('auth.forget_pwd') }}">忘记密码？</a>
                                 <div>|&nbsp</div>
                                 <a href="{{ url_for('auth.register') }}">立即注册</a>
                             </div>
@@ -245,10 +250,7 @@
                     </form>
                 </div>
                 <div class="footer">
-                    © 2020 SSKOO ALL RIGHTS RESERVED | SSKOO.COM | 蜀ICP备19000696号
-                    <div class="logo-footer">
-                        <img src="../static/images/shetu66-logo.png" alt="shetu66.com" width="120">
-                    </div>
+© 2026 WebProject | Contact: 759668915@qq.com | MadeBy: APguantou
                 </div>
             </div>
         </div>

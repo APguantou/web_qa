@@ -1,15 +1,14 @@
-from flask import Blueprint, render_template, jsonify, redirect, url_for, session
-from flask_mail import Message
-from flask import request
-import random
-import string
+from flask import Blueprint, render_template, jsonify, redirect, url_for, session, request,flash
 from models import EmailCaptchaModel, UserModel, QuestionModel,QuestionLikeModel,QuestionFavoriteModel,QuestionCommentModel
 from .forms import RegisterForm, LoginForm
 from werkzeug.security import generate_password_hash, check_password_hash
 from exts import mail, db
+from flask_mail import Message
+import random
+import string
+import time
 
 bp = Blueprint("auth", __name__, url_prefix="/auth")
-
 
 @bp.route("/login_cgw", methods=['GET', 'POST'])
 def login():
@@ -42,11 +41,7 @@ def logout():
     return redirect("/")
 
 
-@bp.route("/forget_pwd_cgw", methods=['GET', 'POST'])
-def forget_password():
-    if request.method == 'GET':
-        return render_template("forget_pwd.html")
-
+from flask import flash
 
 @bp.route("/register_cgw", methods=['GET', 'POST'])
 def register():
@@ -67,8 +62,8 @@ def register():
             db.session.commit()
             return redirect(url_for("auth.login"))
         else:
-            print(form.errors)
-            return redirect(url_for("auth.register"))
+            return render_template("register.html", form_errors=form.errors)
+
 
 
 @bp.route("/mail/test_cgw")
@@ -80,25 +75,6 @@ def mail_test():
     )
     mail.send(message)
     return "邮件发送成功"
-
-
-@bp.route("/captcha/email_cgw")
-def get_email_captcha():
-    email = request.args.get("email")
-    source = string.digits * 4
-    captcha = random.sample(source, 4)
-    captcha = "".join(captcha)
-    message = Message(
-        subject="web开发验证码",
-        recipients=[email],
-        body=f"你的验证码是:{captcha},请小心保管"
-    )
-    mail.send(message)
-    email_captcha = EmailCaptchaModel(email=email, captcha=captcha)
-    db.session.add(email_captcha)
-    db.session.commit()
-    return jsonify({"code": 200, "message": "", "data": None})
-
 
 @bp.route("/user_page_cgw")
 def user_page():
@@ -168,3 +144,58 @@ def delete_account():
         db.session.rollback()
         return jsonify({"success": False, "message": f"删除失败: {str(e)}"}), 500
 
+
+@bp.route("/forget_pwd_cgw")
+def forget_pwd():
+    return render_template("forget_pwd.html")
+
+@bp.route("/send_email_captcha", methods=['POST'])
+def send_email_captcha():
+    email = request.form.get('email')
+    if not email:
+        return jsonify({"success": False, "message": "邮箱不能为空"}), 400
+
+    captcha = ''.join(random.choices(string.digits, k=6))
+
+    captcha_record = EmailCaptchaModel(
+        email=email,
+        captcha=captcha,
+    )
+    db.session.add(captcha_record)
+    db.session.commit()
+
+    message = Message(
+        subject="密码重置验证码",
+        recipients=[email],
+        body=f"您的验证码是：{captcha}，5分钟内有效。"
+    )
+    mail.send(message)
+
+    return jsonify({"success": True, "message": "验证码已发送"})
+
+
+@bp.route("/reset_pwd_cgw", methods=['POST'])
+def reset_password():
+    # 获取表单数据
+    email = request.form.get('email')
+    email_captcha = request.form.get('email_captcha')
+    new_password = request.form.get('new_password')
+    # 参数校验
+    if not all([email, email_captcha, new_password]):
+        return jsonify({"success": False, "message": "所有字段均不能为空"}), 400
+
+    # 验证邮箱验证码
+    captcha_record = EmailCaptchaModel.query.filter_by(email=email).first()
+    if not captcha_record or captcha_record.captcha != email_captcha:
+        return jsonify({"success": False, "message": "邮箱验证码错误"}), 400
+
+    # 查询用户并更新密码
+    user = UserModel.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"success": False, "message": "用户不存在"}), 404
+
+    user.password = generate_password_hash(new_password)
+    db.session.delete(captcha_record)  # 删除验证码记录
+    db.session.commit()
+
+    return jsonify({"success": True, "message": "密码重置成功"})

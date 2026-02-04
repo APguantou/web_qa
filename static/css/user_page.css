@@ -158,6 +158,23 @@ body {
 }
 
 /* ===== 内容区域（帖子/点赞/收藏/评论） ===== */
+.tab-btn {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.tab-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.tab-btn.active {
+    background-color: #007bff;
+    color: white;
+}
+
 .posts-section {
     background: white;
     border-radius: 12px;

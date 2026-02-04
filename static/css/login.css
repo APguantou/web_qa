@@ -1,4 +1,4 @@
-/* 全局样式 */
+
 body {
     background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
     min-height: 100vh;
@@ -8,7 +8,6 @@ body {
     padding: 20px;
 }
 
-/* 登录卡片样式 */
 .login-card {
     background: white;
     border-radius: 12px;
@@ -18,7 +17,6 @@ body {
     overflow: hidden;
 }
 
-/* 登录头部样式 */
 .login-header {
     text-align: center;
     padding: 30px 20px;
@@ -36,7 +34,6 @@ body {
     font-size: 14px;
 }
 
-/* 登录表单样式 */
 .login-form {
     padding: 10px 30px;
 }
@@ -65,6 +62,16 @@ body {
     font-size: 14px;
 }
 
+.form-check {
+    display: flex;
+    align-items: center;
+
+}
+
+.form-check-input {
+    margin-right: 8px;
+}
+
 .btn-login {
     background: #339dff;
     border: none;
@@ -77,7 +84,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* 底部样式 */
 .footer {
     text-align: center;
     padding: 20px;
@@ -87,7 +93,11 @@ body {
     border-top: 1px solid #eee;
 }
 
-/* 插图区域样式 */
+.logo-footer {
+    margin-top: 10px;
+}
+
+/* 插图区域 */
 .illustration {
     background: #f0f7ff;
     padding: 30px;
@@ -99,10 +109,60 @@ body {
     width: 100%;
     max-width: 100%;
     height: auto;
-    object-fit: contain;
+    object-fit: contain; /* 保持横纵比，完整显示图片 */
 }
 
-/* 返回首页按钮样式 */
+/* 链接样式 */
+.links {
+    text-align: center;
+
+}
+
+.links a {
+    color: #3399ff;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* 第三方登录按钮 */
+.social-login {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin: 2px 0;
+}
+
+.social-btn {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    color: #333;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.social-btn:hover {
+    background: #f0f0f0;
+}
+
+.wechat-icon {
+    color: #07c74b;
+}
+
+.qq-icon {
+    color: #1a96ff;
+}
+
+/* 返回首页按钮 - 放在左上角 */
 .back-home {
     position: absolute;
     top: 20px;
@@ -120,32 +180,30 @@ body {
     text-decoration: underline;
 }
 
-/* 链接样式 */
+/* 修改链接区域布局 - 与记住用户名同行 */
 .links {
-    text-align: center;
-    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
 }
 
 .links a {
     color: #3399ff;
     text-decoration: none;
-    font-size: 14px;
 }
 
 .links a:hover {
     text-decoration: underline;
 }
 
-/* 验证码容器样式 */
-.captcha-container {
+.remember-container {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 
-.captcha-container input {
-    flex: 1;
-}
+.remember-container .form-check {
 
-.captcha-container button {
-    height: 46px;
 }

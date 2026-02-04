@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="../static/css/init.css">
     <link rel="stylesheet" href="../static/fontawesome-free-7.1.0-web/css/all.min.css">
     <link rel="stylesheet" href="../static/css/user_page.css"></link>
-           <link rel="icon" href="../static/photo/Web%20Q&A%20Logo.ico" type="image/x-icon">
-
+    <link rel="icon" href="../static/photo/Web%20Q&A%20Logo.ico" type="image/x-icon">
+    <script src="../static/jquery/jquery.3.6.min.js"></script>
+    <script src="../static/js/user_page.js"></script>
     <title>web问答平台-用户主页</title>
 
 </head>
@@ -89,18 +90,18 @@
     <div class="posts-section">
         <div class="section-header">
             <div class="tab-buttons-container">
-<button class="tab-btn active" data-tab="posts" onclick="showTab('posts')">
-    <i class="fas fa-pencil-alt" style="color:#00b8d4;"></i> 我的帖子
-</button>
-<button class="tab-btn" data-tab="likes" onclick="showTab('likes')">
-    <i class="fas fa-thumbs-up" style="color:#339dff;"></i> 我的点赞
-</button>
-<button class="tab-btn" data-tab="favorites" onclick="showTab('favorites')">
-    <i class="fas fa-bookmark" style="color:#ffc107;"></i> 我的收藏
-</button>
-<button class="tab-btn" data-tab="comments" onclick="showTab('comments')">
-    <i class="fas fa-comment" style="color:#ff9800;"></i> 我的评论
-</button>
+                <button class="tab-btn active" data-tab="posts" onclick="showTab('posts')">
+                    <i class="fas fa-pencil-alt" style="color:#00b8d4;"></i> 我的帖子
+                </button>
+                <button class="tab-btn" data-tab="likes" onclick="showTab('likes')">
+                    <i class="fas fa-thumbs-up" style="color:#339dff;"></i> 我的点赞
+                </button>
+                <button class="tab-btn" data-tab="favorites" onclick="showTab('favorites')">
+                    <i class="fas fa-bookmark" style="color:#ffc107;"></i> 我的收藏
+                </button>
+                <button class="tab-btn" data-tab="comments" onclick="showTab('comments')">
+                    <i class="fas fa-comment" style="color:#ff9800;"></i> 我的评论
+                </button>
 
             </div>
 
@@ -122,9 +123,19 @@
                                 <span class="question-author">{{ question.author.username }}</span>
                                 <span class="question-time">{{ question.create_time }}</span>
                             </div>
+                            <!-- 新增编辑和删除按钮 -->
+                            <div class="question-actions">
+                                <a href="{{ url_for('qa.public_question', question_id=question.id) }}"
+                                   class="btn btn-sm btn-warning">
+                                    编辑
+                                </a>
+                                <button class="btn btn-sm btn-danger" onclick="deletePost({{ question.id }})">删除
+                                </button>
+                            </div>
                         </div>
                     </li>
                 {% endfor %}
+
                 {% if not user_questions %}
                     <div class="empty-posts">
                         <i class="fas fa-inbox"></i>
@@ -221,105 +232,5 @@
     </div>
 
 </div>
-
-<script>
-    // 注销确认功能
-    // 替换原来的 confirmLogout 函数
-    function confirmLogout() {
-        if (confirm("您确定要注销吗？这将会从数据库中删除您的账户信息。")) {
-            // 发送请求到后端执行账户删除操作
-            fetch('/auth/delete_account_cgw', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'same-origin' // 包含cookie
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('账户已成功删除！');
-                        window.location.href = '/'; // 重定向到首页
-                    } else {
-                        alert('删除失败：' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('注销过程中出现错误。');
-                });
-        }
-    }
-
-    function togglePointsDetail() {
-        const detailElement = document.getElementById('points-detail');
-        if (detailElement.style.display === 'none' || detailElement.style.display === '') {
-            // 展开
-            detailElement.style.display = 'block';
-            detailElement.style.opacity = '0';
-            detailElement.style.maxHeight = '0';
-            setTimeout(() => {
-                detailElement.style.transition = 'opacity 0.3s ease, max-height 0.3s ease';
-                detailElement.style.opacity = '1';
-                detailElement.style.maxHeight = '200px'; // 设置最大高度
-            }, 10);
-        } else {
-            // 收起
-            detailElement.style.transition = 'opacity 0.3s ease, max-height 0.3s ease';
-            detailElement.style.opacity = '0';
-            detailElement.style.maxHeight = '0';
-            setTimeout(() => {
-                detailElement.style.display = 'none';
-            }, 300);
-        }
-    }
-
-    // 删除帖子功能
-    // 修改deletePost函数以适应新的结构
-    function deletePost(postId) {
-        if (confirm(`您确定要删除这篇帖子吗？此操作不可撤销。`)) {
-            fetch(`/api/posts/${postId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'same-origin'
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        alert('帖子删除成功！');
-                        location.reload(); // 刷新页面
-                    } else {
-                        alert('删除失败：' + data.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('删除过程中出现错误。');
-                });
-        }
-    }
-
-    function showTab(tabName) {
-    // 隐藏所有 tab 内容
-    document.querySelectorAll('.tab-content').forEach(content => {
-        content.classList.remove('active');
-    });
-
-    // 移除所有按钮的 active 类
-    document.querySelectorAll('.tab-btn').forEach(button => {
-        button.classList.remove('active');
-    });
-
-    // 显示当前 tab 内容
-    document.getElementById(`${tabName}-tab`).classList.add('active');
-
-    // 给当前按钮添加 active 类
-    event.target.classList.add('active');
-}
-
-
-</script>
 </body>
 </html>

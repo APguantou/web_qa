@@ -45,6 +45,11 @@ body {
     gap: 20px; /* 替代 margin，更现代 */
 }
 
+#header-top #logo {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
 /* 顶部快捷链接 */
 #top-links ul {
     display: flex;
@@ -189,7 +194,7 @@ body {
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 #JS-news-main img {
@@ -212,7 +217,7 @@ body {
     flex: 1;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
 }
 
@@ -347,7 +352,7 @@ body {
 
 #main-block3-left .main-block-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 #main-block3-left .main-block-item img {
@@ -412,7 +417,7 @@ body {
 
 #main-block3-right .main-block-item:hover {
     transform: translateX(5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 #main-block3-right .main-block-item:first-child {
@@ -512,7 +517,6 @@ body {
 }
 
 
-
 #gpa-calculator {
     padding: 20px;
 }
@@ -583,6 +587,7 @@ body {
     background-color: #f2f2f2;
     font-weight: bold;
 }
+
 #semester-select {
     width: 100%;
     padding: 8px;
@@ -657,7 +662,7 @@ input[readonly] {
     border-radius: 8px;
     padding: 10px;
     min-width: 60px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .time-value {

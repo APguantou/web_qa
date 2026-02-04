@@ -7,139 +7,107 @@
     <link rel="stylesheet" href="../static/bootstrap/bootstrap.4.6.min.css">
     <link rel="stylesheet" href="../static/css/init.css">
     <link rel="stylesheet" href="../static/css/index.css">
-            <link rel="icon" href="../static/photo/Web%20Q&A%20Logo.ico" type="image/x-icon">
-
+    <link rel="icon" href="../static/photo/Web%20Q&A%20Logo.ico" type="image/x-icon">
+    <script src="../static/js/index.js"></script>
     <title>web问答平台-首页</title>
 </head>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const navbar = document.querySelector('.navbar');
-        const originalTop = navbar.offsetTop;
-        let isStuck = false;
-
-        function handleScroll() {
-            if (window.scrollY > originalTop && !isStuck) {
-                navbar.classList.add('sticky-top');
-                isStuck = true;
-            } else if (window.scrollY <= originalTop && isStuck) {
-                navbar.classList.remove('sticky-top');
-                isStuck = false;
-            }
-        }
-
-        window.addEventListener('scroll', handleScroll);
-
-        // 初始化状态
-        handleScroll();
-    });
-async function updateWeather() {
-    try {
-        const response = await fetch('/api/weather');
-        const data = await response.json();
-        if (!data.error) {
-            document.getElementById('weather-info').innerText =
-                `${data.city}: ${data.temperature}°C, ${data.description}`;
-        } else {
-            document.getElementById('weather-info').innerText = "天气服务暂时不可用";
-        }
-    } catch (error) {
-        console.error("获取天气失败:", error);
-        document.getElementById('weather-info').innerText = "天气服务暂时不可用";
-    }
-}
-
-
-    // 页面加载完成后立即更新一次天气
-    document.addEventListener('DOMContentLoaded', updateWeather);
-
-    // 每小时更新一次天气
-    setInterval(updateWeather, 3600000);
-
-</script>
-
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="/">web问答</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="/">web问答</a>
+            <!-- 移动端导航切换按钮 -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                {% if weather %}
-        <li class="nav-item">
-            <span id="weather-info" class="navbar-text weather">
-                {{ weather.city }}: {{ weather.temperature }}°C, {{ weather.description }}
-            </span>
-        </li>
-    {% endif %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('qa.JS_index') }}">学校首页</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('qa.public_question') }}">发布问答</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('qa.top_list') }}">热榜</a>
-                </li>
-                <li class="nav-item ml-2">
-                    <form class="form-inline my-2 my-lg-0" method="GET" action="/">
-                        <input class="form-control mr-sm-2" type="search" placeholder="关键字" aria-label="Search"
-                               name="q" value="{{ search_query or '' }}">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
-                    </form>
-                </li>
-
-            </ul>
-            <ul class="navbar-nav">
-                {% if user %}
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- 导航菜单 -->
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <!-- 天气信息显示 -->
+                    {% if weather %}
+                    <li class="nav-item">
+                        <span id="weather-info" class="navbar-text weather">
+                            {{ weather.city }}: {{ weather.temperature }}°C, {{ weather.description }}
+                        </span>
+                    </li>
+                    {% endif %}
+                    <!-- 首页链接 -->
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <!-- 学校首页链接 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('qa.JS_index') }}">学校首页</a>
+                    </li>
+                    <!-- 发布问答链接 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('qa.public_question') }}">发布问答</a>
+                    </li>
+                    <!-- 热榜链接 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('qa.top_list') }}">热榜</a>
+                    </li>
+                    <!-- 搜索表单 -->
+                    <li class="nav-item ml-2">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="/">
+                            <input class="form-control mr-sm-2" type="search" placeholder="关键字" aria-label="Search"
+                                name="q" value="{{ search_query or '' }}">
+                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                        </form>
+                    </li>
+                </ul>
+                <!-- 用户登录/注册或用户信息区域 -->
+                <ul class="navbar-nav">
+                    {% if user %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.user_page') }}">{{ user.username }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.logout') }}">退出登录</a>
                     </li>
-                {% else %}
+                    {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.login') }}">登录</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url_for('auth.register') }}">注册</a>
                     </li>
-                {% endif %}
-            </ul>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
-
-<div class="container">
-    <div class="row" style="margin-top: 20px;">
-        <div class="col"></div>
-        <div class="col-10">
-            <!-- 替换原来的 <ul class="question-ul"> 部分 -->
-            <ul class="question-ul">
-                {% for question in questions %}
+    <!-- 主体内容区域 -->
+    <div class="container">
+        <div class="row" style="margin-top: 20px;">
+            <div class="col"></div>
+            <div class="col-10">
+                <!-- 问题列表 -->
+                <ul class="question-ul">
+                    {% for question in questions %}
                     <li>
+                        <!-- 用户头像 -->
                         <div class="side-question">
-                            <img class="side-question-avatar"
-                                 src="{{ url_for('static', filename='images/avatar.jpg') }}" alt="">
+                            <img class="side-question-avatar" src="{{ url_for('static', filename='images/avatar.jpg') }}"
+                                alt="">
                         </div>
+                        <!-- 问题主体内容 -->
                         <div class="question-main">
-                            <!-- 修改这一部分 -->
+                            <!-- 问题标题 -->
                             <div class="question-title">
                                 <a href="{{ url_for('qa.question_detail', question_id=question.id) }}">{{ question.title }}</a>
                             </div>
+                            <!-- 问题内容 -->
                             <div class="question-content">{{ question.content }}</div>
+                            <!-- 作者与时间信息 -->
                             <div class="question-detail">
                                 <span class="question-author">{{ question.author.username }}</span>
                                 <span class="question-time">{{ question.create_time }}</span>
                             </div>
+                            <!-- 互动统计数据 -->
                             <div class="interaction-stats">
                                 <div class="stat-item">
                                     <i class="fas fa-eye"></i> 浏览: {{ question.view_count }}
@@ -156,35 +124,33 @@ async function updateWeather() {
                             </div>
                         </div>
                     </li>
-                {% endfor %}
-            </ul>
-            <!-- 在帖子列表下方添加分页控件 -->
-            <div class="pagination">
-                {% if pagination.has_prev %}
+                    {% endfor %}
+                </ul>
+                <!-- 分页控件 -->
+                <div class="pagination">
+                    {% if pagination.has_prev %}
                     <a href="{{ url_for('qa.index', page=pagination.prev_num) }}">上一页</a>
-                {% endif %}
-
-                {% for page_num in pagination.iter_pages() %}
-                    {% if page_num %}
-                        {% if page_num != pagination.page %}
-                            <a href="{{ url_for('qa.index', page=page_num) }}">{{ page_num }}</a>
-                        {% else %}
-                            <span class="current">{{ page_num }}</span>
-                        {% endif %}
-                    {% else %}
-                        <span>...</span>
                     {% endif %}
-                {% endfor %}
 
-                {% if pagination.has_next %}
+                    {% for page_num in pagination.iter_pages() %}
+                    {% if page_num %}
+                    {% if page_num != pagination.page %}
+                    <a href="{{ url_for('qa.index', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                    <span class="current">{{ page_num }}</span>
+                    {% endif %}
+                    {% else %}
+                    <span>...</span>
+                    {% endif %}
+                    {% endfor %}
+
+                    {% if pagination.has_next %}
                     <a href="{{ url_for('qa.index', page=pagination.next_num) }}">下一页</a>
-                {% endif %}
+                    {% endif %}
+                </div>
             </div>
-
+            <div class="col"></div>
         </div>
-        <div class="col"></div>
     </div>
-</div>
 </body>
-
 </html>

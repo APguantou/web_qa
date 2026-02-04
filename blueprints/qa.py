@@ -16,6 +16,8 @@ WEATHER_API_PARAMS = {
     "appsecret": "B5zsBnJX"
 }
 
+
+# ==================== 工具函数 ====================
 def update_user_points(user_id, points):
     """更新用户积分"""
     try:
@@ -26,6 +28,7 @@ def update_user_points(user_id, points):
     except Exception as e:
         print(f"更新用户积分失败: {e}")
         db.session.rollback()
+
 
 def get_weather(city="Beijing"):
     """获取天气信息"""
@@ -47,6 +50,20 @@ def get_weather(city="Beijing"):
         print(f"获取天气异常：{e}")
         return None
 
+
+def check_user_liked(user_id, question_id):
+    """检查用户是否已点赞"""
+    like_record = QuestionLikeModel.query.filter_by(user_id=user_id, ques_id=question_id).first()
+    return bool(like_record)
+
+
+def check_user_favorited(user_id, question_id):
+    """检查用户是否已收藏"""
+    favorite_record = QuestionFavoriteModel.query.filter_by(user_id=user_id, ques_id=question_id).first()
+    return bool(favorite_record)
+
+
+# ==================== 路由函数 ====================
 @bp.route("/api/weather")
 def api_weather():
     """天气 API 路由"""
@@ -54,6 +71,7 @@ def api_weather():
     if weather_data:
         return jsonify(weather_data)
     return jsonify({"error": "无法获取天气信息"}), 500
+
 
 @bp.route("/")
 def index():
@@ -86,18 +104,31 @@ def index():
         weather=weather_data
     )
 
+
 @bp.route("/qa/public_cgw", methods=['GET', 'POST'])
 def public_question():
-    """发布问题路由"""
+    """发布/编辑问题路由"""
+    question_id = request.args.get('question_id')
+    question = None
+
+    if question_id:
+        question = QuestionModel.query.get_or_404(question_id)
+
     if request.method == 'GET':
-        return render_template("public_question.html")
+        return render_template("public_question.html", question=question)
     else:
         form = QuestionForm(request.form)
         if form.validate():
             title = form.title.data
             content = form.content.data
-            question = QuestionModel(title=title, content=content, author_id=g.user.id)
-            db.session.add(question)
+
+            if question:  # 编辑模式
+                question.title = title
+                question.content = content
+            else:  # 新建模式
+                question = QuestionModel(title=title, content=content, author_id=g.user.id)
+                db.session.add(question)
+
             db.session.commit()
             update_user_points(g.user.id, 10)
             return redirect("/")
@@ -105,27 +136,20 @@ def public_question():
             print(form.errors)
             return redirect(url_for("qa.public_question"))
 
-@bp.route("/top_list")
+
+@bp.route("/top_list_cgw")
 def top_list():
     """热榜路由"""
     questions = QuestionModel.query.order_by(QuestionModel.view_count.desc()).limit(10).all()
     creators = UserModel.query.order_by(UserModel.points.desc()).limit(10).all()
     return render_template("top_list.html", questions=questions, creators=creators)
 
+
 @bp.route("JS_index_cgw")
 def JS_index():
     """JS 首页路由"""
     return render_template("JS_index.html")
 
-def check_user_liked(user_id, question_id):
-    """检查用户是否已点赞"""
-    like_record = QuestionLikeModel.query.filter_by(user_id=user_id, ques_id=question_id).first()
-    return bool(like_record)
-
-def check_user_favorited(user_id, question_id):
-    """检查用户是否已收藏"""
-    favorite_record = QuestionFavoriteModel.query.filter_by(user_id=user_id, ques_id=question_id).first()
-    return bool(favorite_record)
 
 @bp.route("/question/<int:question_id>")
 def question_detail(question_id):
@@ -145,6 +169,7 @@ def question_detail(question_id):
                          user_is_favorite=user_is_favorite,
                          comments=comments,
                          user=g.user if hasattr(g, 'user') else None)
+
 
 @bp.route("/api/questions/<int:question_id>/like", methods=['POST'])
 def like_question(question_id):
@@ -171,6 +196,7 @@ def like_question(question_id):
     db.session.commit()
     return jsonify({"success": True, "liked": liked, "like_count": question.like_count})
 
+
 @bp.route("/api/questions/<int:question_id>/favorite", methods=['POST'])
 def favorite_question(question_id):
     """收藏问题 API"""
@@ -195,6 +221,7 @@ def favorite_question(question_id):
 
     db.session.commit()
     return jsonify({"success": True, "favorited": favorited, "favorite_count": question.favorite_count})
+
 
 @bp.route("/api/questions/<int:question_id>/comments", methods=['POST'])
 def add_comment(question_id):
